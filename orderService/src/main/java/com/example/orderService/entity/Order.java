@@ -1,5 +1,6 @@
 package com.example.orderService.entity;
 
+import com.example.orderService.dto.OrderStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class Order {
     private String orderId;
     private String customerId;
     private Double totalAmount;
-    private String orderStatus;
+    private OrderStatus orderStatus;
     private LocalDateTime orderDate;
 
 }
