@@ -12,6 +12,7 @@ public interface OrderService {
 
     public OrderResponseDto placeOrder(OrderRequestDto orderRequestDto);
     public OrderResponseDto getOrderById(String orderId);
+    public List<OrderResponseDto> getOrdersByCustomerId(String customerId);
     public List<OrderResponseDto> getAllOrder();
     public OrderResponseDto updateOrder(String orderId, String status);
     public String deleteOrder(String orderId);

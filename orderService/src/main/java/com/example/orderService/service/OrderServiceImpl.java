@@ -68,13 +68,43 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponseDto getOrderById(String orderId) {
-        return null;
+        Order order = orderRepository.findById(orderId).orElseThrow(()-> new RuntimeException("Order not found: " + orderId));
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
+        return new OrderResponseDto(
+                order.getOrderId(),
+                order.getCustomerId(),
+                order.getTotalAmount(),
+                order.getOrderStatus().name(),
+                order.getOrderDate(),
+                orderItems
+        );
+    }
+
+    @Override
+    public List<OrderResponseDto> getOrdersByCustomerId(String customerId) {
+        List<Order> orders = orderRepository.findByCustomerId(customerId);
+        List<OrderResponseDto> orderResponseDtos = new ArrayList<>();
+
+        for (Order order : orders) {
+            List<OrderItem> orderItems = orderItemRepository.findByOrderId(order.getOrderId());
+            OrderResponseDto orderResponseDto = new OrderResponseDto(
+                    order.getOrderId(),
+                    order.getCustomerId(),
+                    order.getTotalAmount(),
+                    order.getOrderStatus().name(),
+                    order.getOrderDate(),
+                    orderItems
+            );
+            orderResponseDtos.add(orderResponseDto);
+        }
+        return orderResponseDtos;
     }
 
     @Override
     public List<OrderResponseDto> getAllOrder() {
         return List.of();
     }
+
 
     @Override
     public OrderResponseDto updateOrder(String orderId, String status) {
